@@ -39,6 +39,24 @@ html {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.measureLabel {
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: inline-block;
+  width: 50px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.speedLabel {
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: inline-block;
+  width: 50px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
 .radio-container {
   display: flex;
   align-items: center;
