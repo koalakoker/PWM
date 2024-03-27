@@ -4,7 +4,7 @@ canvas.height = 600;
 let ctx = canvas.getContext("2d");
 let rotor = new MechVector(inertia.value, friction.value, "purple", 200, 0);
 let autoStator = new Vector("black", 200, 0);
-let manualStator = new ManualVector(canvas, "black", 200, Math.PI / 2);
+let manualStator = new ManualVector(canvas, "black", 200, 0);
 let focStator = new FOC(
   rpm2rads(rpm.value),
   kp.value,
