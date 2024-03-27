@@ -24,20 +24,21 @@ class Vector {
     ctx.beginPath();
     ctx.fillStyle = this.color;
     ctx.lineWidth = 4;
-    x2 += this.lineWidth * Math.cos(this.angle);
-    y2 -= this.lineWidth * Math.sin(this.angle);
+    let sMag = this.mag / Math.abs(this.mag);
+    x2 += this.lineWidth * sMag * Math.cos(this.angle);
+    y2 -= this.lineWidth * sMag * Math.sin(this.angle);
     ctx.moveTo(
-      x2 - arrowSize * Math.cos(this.angle - Math.PI / 6),
-      y2 + arrowSize * Math.sin(this.angle - Math.PI / 6)
+      x2 - arrowSize * sMag * Math.cos(this.angle - Math.PI / 6),
+      y2 + arrowSize * sMag * Math.sin(this.angle - Math.PI / 6)
     );
     ctx.lineTo(x2, y2);
     ctx.lineTo(
-      x2 - arrowSize * Math.cos(this.angle + Math.PI / 6),
-      y2 + arrowSize * Math.sin(this.angle + Math.PI / 6)
+      x2 - arrowSize * sMag * Math.cos(this.angle + Math.PI / 6),
+      y2 + arrowSize * sMag * Math.sin(this.angle + Math.PI / 6)
     );
     ctx.lineTo(
-      x2 - arrowSize * Math.cos(this.angle - Math.PI / 6),
-      y2 + arrowSize * Math.sin(this.angle - Math.PI / 6)
+      x2 - arrowSize * sMag * Math.cos(this.angle - Math.PI / 6),
+      y2 + arrowSize * sMag * Math.sin(this.angle - Math.PI / 6)
     );
     ctx.fill();
   }
