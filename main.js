@@ -5,7 +5,15 @@ let ctx = canvas.getContext("2d");
 let rotor = new MechVector(inertia.value, friction.value, "purple", 200, 0);
 let autoStator = new Vector("black", 200, 0);
 let manualStator = new ManualVector(canvas, "black", 200, Math.PI / 2);
-let focStator = new FOC(rotor, "black", 200, 0);
+let focStator = new FOC(
+  rpm2rads(rpm.value),
+  kp.value,
+  ki.value,
+  rotor,
+  "black",
+  200,
+  0
+);
 let motor = new Motor(manualStator, rotor);
 let fps = 60;
 let dt = 1 / fps;

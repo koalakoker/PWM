@@ -1,10 +1,11 @@
 // RPM
 let rpm = document.getElementById("rpm");
-rpm.value = 60;
+rpm.value = 50;
 
 rpm.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     autoStator.speed = rpm2rads(rpm.value);
+    focStator.target = rpm2rads(rpm.value);
   }
 });
 
@@ -55,3 +56,19 @@ friction.addEventListener("keydown", (e) => {
 
 // Measured speed
 let speed = document.getElementById("speed");
+
+// Speed PI params
+let kp = document.getElementById("kp");
+kp.value = 1000;
+kp.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    focStator.speedPI.kp = kp.value;
+  }
+});
+let ki = document.getElementById("ki");
+ki.value = 1000;
+ki.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    focStator.speedPI.ki = ki.value;
+  }
+});
