@@ -14,3 +14,33 @@ html {
 #myCanvas {
   background-color: white;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 10;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.radio-label {
+  color: white;
+  margin-right: 5px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.label {
+  color: white;
+  margin-right: 10px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.radio-container {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
