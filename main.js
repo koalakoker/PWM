@@ -2,16 +2,16 @@ let canvas = document.getElementById("myCanvas");
 canvas.width = 600;
 canvas.height = 600;
 let ctx = canvas.getContext("2d");
-let rotor = new MechVector(inertia.value, friction.value, "purple", 200, 0);
-let autoStator = new Vector("black", 200, 0);
-let manualStator = new ManualVector(canvas, "black", 200, 0);
+let rotor = new MechVector(inertia.value, friction.value, "purple", 1, 0);
+let autoStator = new Vector("black", 1, 0);
+let manualStator = new ManualVector(canvas, "black", 1, 0);
 let focStator = new FOC(
   rpm2rads(rpm.value),
   kp.value,
   ki.value,
   rotor,
   "black",
-  200,
+  1,
   0
 );
 let motor = new Motor(manualStator, rotor);
@@ -33,11 +33,15 @@ function draw() {
   } else if (manualRadioButton.checked) {
     manualStator.draw(ctx);
     manualStator.update(dt);
+    current.textContent = "Current: " + autoStator.mag.toFixed(3);
   } else {
     focStator.draw(ctx);
     focStator.update(dt);
+    current.textContent = "Current: " + focStator.mag.toFixed(3);
   }
   speed.textContent = "Speed: " + Math.trunc(rads2rpm(rotor.speed));
+  torque.textContent = "Torque: " + rotor.torque.toFixed(3);
+  current.textContent = "Current: " + motor.stator.mag.toFixed(3);
 
   ctx.restore();
 }

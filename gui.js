@@ -54,19 +54,21 @@ friction.addEventListener("keydown", (e) => {
   }
 });
 
-// Measured speed
+// Measure
 let speed = document.getElementById("speed");
+let torque = document.getElementById("torque");
+let current = document.getElementById("current");
 
 // Speed PI params
 let kp = document.getElementById("kp");
-kp.value = 1000;
+kp.value = 5;
 kp.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     focStator.speedPI.kp = kp.value;
   }
 });
 let ki = document.getElementById("ki");
-ki.value = 1000;
+ki.value = 5;
 ki.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     focStator.speedPI.ki = ki.value;

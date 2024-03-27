@@ -10,7 +10,7 @@ class Motor {
 
   applyTorque() {
     let theta = this.stator.angle - this.rotor.angle;
-    let mag = this.stator.mag / this.rotor.mag;
+    let mag = this.stator.mag * this.rotor.mag;
     this.rotor.applyTorque(mag * Math.sin(theta));
   }
 }

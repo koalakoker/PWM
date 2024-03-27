@@ -6,13 +6,14 @@ class Vector {
     this.angle = angle;
     this.center = center;
     this.speed = 0;
+    this.factor = 200; // 1Nm is represented by 200px
   }
 
   draw(ctx) {
     let x1 = this.center.x,
       y1 = this.center.y,
-      x2 = x1 + this.mag * Math.cos(this.angle),
-      y2 = y1 - this.mag * Math.sin(this.angle);
+      x2 = x1 + this.mag * this.factor * Math.cos(this.angle),
+      y2 = y1 - this.mag * this.factor * Math.sin(this.angle);
     let arrowSize = this.lineWidth + 20;
     ctx.strokeStyle = this.color;
     ctx.lineWidth = this.lineWidth;
