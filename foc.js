@@ -6,7 +6,7 @@ class FOC extends Vector {
     this.rotor = rotor;
     this.mode = speedMode;
     this.magMax = mag;
-    this.speedPI = new PI(kp, ki);
+    this.speedPI = new PI(kp, ki, mag, mag / 2);
     this.target = target;
   }
 
