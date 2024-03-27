@@ -1,19 +1,28 @@
-var canvas = document.getElementById("myCanvas");
-canvas.width = 400;
+let canvas = document.getElementById("myCanvas");
+canvas.width = 600;
+canvas.height = 600;
+let ctx = canvas.getContext("2d");
+let rotor = new MechVector(0.2, 2, "purple", 200, 0);
+let stator = new ManualVector(canvas, "black", 200, Math.PI / 2);
+//stator.speed = rpm2rads(30);
+let motor = new Motor(stator, rotor);
+let fps = 60;
+let dt = 1 / fps;
 
-var ctx = canvas.getContext("2d");
-var car = new Car(canvas.width / 2, window.innerHeight / 2, 40, 80);
+setInterval(draw, 1000 / fps);
 
-var road = new Road(canvas.width / 2, canvas.width - 20, 3);
-
-animate();
-
-function animate() {
-  canvas.height = window.innerHeight;
+function draw() {
+  clearCanvas(ctx);
   ctx.save();
-  ctx.translate(0, canvas.height * 0.8 - car.y);
-  road.draw(ctx);
-  car.draw(ctx);
+  ctx.translate(canvas.height / 2, canvas.height / 2);
+  motor.update(dt);
+  rotor.draw(ctx);
+  rotor.update(dt);
+  stator.draw(ctx);
+  stator.update(dt);
   ctx.restore();
-  requestAnimationFrame(animate);
+}
+
+function clearCanvas(ctx) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
