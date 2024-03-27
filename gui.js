@@ -22,11 +22,17 @@ let manualRadioButton = document.querySelector(
 
 function handleRadioButtonChange() {
   if (autoRadioButton.checked) {
-    autoStator.angle = manualStator.angle;
+    if (rpm.value > 0) {
+      autoStator.angle = rotor.angle + Math.PI / 2;
+    } else if (rpm.value < 0) {
+      autoStator.angle = rotor.angle - Math.PI / 2;
+    } else {
+      autoStator.angle = rotor.angle;
+    }
     autoStator.speed = rpm2rads(rpm.value);
     motor.stator = autoStator;
   } else if (manualRadioButton.checked) {
-    manualStator.angle = autoStator.angle;
+    manualStator.angle = rotor.angle;
     motor.stator = manualStator;
   } else {
     motor.stator = focStator;
