@@ -1,51 +1,40 @@
+// Canvas Init
 let canvas = document.getElementById("myCanvas");
 canvas.width = 600;
 canvas.height = 600;
 let ctx = canvas.getContext("2d");
-let rotor = new MechVector(inertia.value, friction.value, "purple", 1, 0);
-let autoStator = new Vector("black", 1, 0);
-let manualStator = new ManualVector(canvas, "black", 1, 0);
-let focStator = new FOC(
-  rpm2rads(rpm.value),
-  kp.value,
-  ki.value,
-  rotor,
-  "black",
-  1,
-  0
-);
-let motor = new Motor(manualStator, rotor);
+
+// Animation Set and run
 let fps = 60;
 let dt = 1 / fps;
-
 setInterval(draw, 1000 / fps);
 
 function draw() {
-  clearCanvas(ctx);
-  ctx.save();
-  ctx.translate(canvas.height / 2, canvas.height / 2);
-  motor.update(dt);
-  rotor.draw(ctx);
-  rotor.update(dt);
-  if (autoRadioButton.checked) {
-    autoStator.draw(ctx);
-    autoStator.update(dt);
-  } else if (manualRadioButton.checked) {
-    manualStator.draw(ctx);
-    manualStator.update(dt);
-    current.textContent = "Current: " + autoStator.mag.toFixed(3);
-  } else {
-    focStator.draw(ctx);
-    focStator.update(dt);
-    current.textContent = "Current: " + focStator.mag.toFixed(3);
-  }
-  speed.textContent = "Speed: " + Math.trunc(rads2rpm(rotor.speed));
-  torque.textContent = "Torque: " + rotor.torque.toFixed(3);
-  current.textContent = "Current: " + motor.stator.mag.toFixed(3);
-
-  ctx.restore();
-}
-
-function clearCanvas(ctx) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  //ctx.translate(canvas.height / 2, canvas.height / 2);
+  // Put here the content
+
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  let amp = 50;
+  let xStart = 100;
+  let xEnd = canvas.width - 100;
+  let y0 = canvas.height / 2;
+  let y = y0;
+  let th = 0;
+  let wave = 10;
+  let dTh = (wave * (2 * Math.PI)) / (xEnd - xStart);
+  ctx.moveTo(xStart - 50, y);
+  ctx.lineTo(xStart, y);
+  for (let x = xStart; x < xEnd; x += 1) {
+    y = y0 + amp * Math.sin(th);
+    th += dTh;
+    ctx.lineTo(x, y);
+  }
+  ctx.lineTo(xEnd + 50, y);
+
+  ctx.stroke();
+  ctx.restore();
 }
