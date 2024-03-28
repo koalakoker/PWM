@@ -10,17 +10,18 @@ class Inductor {
     this.off = 0;
     this.step = 5;
     this.speed = 0.0;
-    this.dir = 1;
+    this.th = 0;
     this.on = false;
-    this.flux = new Vector("blue", this.speed, 0, { x: 300, y: 300 });
+    this.flux = new Vector("blue", this.speed, 0, {
+      x: (xEnd + xStart) / 2,
+      y: y0,
+    });
   }
 
   animate() {
-    this.speed += 0.01 * this.dir;
-    if (this.speed >= 1 || this.speed <= -1) {
-      this.dir = this.dir * -1;
-    }
+    this.speed = Math.sin(this.th);
     this.flux.mag = this.speed;
+    this.th += 0.01;
   }
 
   draw(ctx) {
@@ -82,5 +83,7 @@ class Inductor {
 
   toggle() {
     this.on = !this.on;
+    this.th = 0;
+    this.speed = 0;
   }
 }
