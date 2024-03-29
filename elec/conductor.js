@@ -2,12 +2,15 @@ class Conductor extends TogglableElemtnt {
   constructor() {
     super(() => {
       this.off = 0;
+      this.th = 0;
     });
     this.a = new Point(100, 200);
     this.b = new Point(200, 50);
     this.off = 0;
     this.segment = 5;
     this.speed = 0.05;
+    this.th = 0;
+    this.omega = 0.04;
   }
   draw(ctx) {
     // Frame
@@ -30,9 +33,14 @@ class Conductor extends TogglableElemtnt {
     }
   }
   update() {
+    this.speed = Math.sin(this.th) / 10;
+    this.th += this.omega;
     this.off += this.speed;
-    if (this.off >= 1) {
+    if (this.off > 1) {
       this.off = 0;
+    }
+    if (this.off < 0) {
+      this.off = 1;
     }
   }
 }
