@@ -15,6 +15,7 @@ class Inductor extends TogglableElemtnt {
     this.step = 5;
     this.speed = 0.0;
     this.th = 0;
+    this.omega = 0.04;
     this.flux = new Vector("blue", this.speed, 0, {
       x: (xEnd + xStart) / 2,
       y: y0,
@@ -24,27 +25,27 @@ class Inductor extends TogglableElemtnt {
   animate() {
     this.speed = Math.sin(this.th);
     this.flux.mag = this.speed;
-    this.th += 0.01;
+    this.th += this.omega;
+    this.off += this.speed;
+    if (this.off > this.step) {
+      this.off = 0;
+    }
   }
 
   draw(ctx) {
     this.drawframe(ctx);
     if (this.isOn()) {
       this.flux.draw(ctx);
-      this.electron(ctx);
+      this.drawElectron(ctx);
     }
     this.animate();
   }
 
-  electron(ctx) {
+  drawElectron(ctx) {
     let p = new Point();
     for (p.x = xStart + this.off; p.x < xEnd; p.x += this.step) {
       p.y = parseInt(this.calc(p.x));
       drawPoint(ctx, p, "red", 5);
-    }
-    this.off += this.speed;
-    if (this.off > this.step) {
-      this.off = 0;
     }
   }
 
