@@ -30,5 +30,6 @@ function draw() {
 function keypressed(e) {
   if (e.code === "Space") {
     inductor.toggle();
+    conductor.toggle();
   }
 }
