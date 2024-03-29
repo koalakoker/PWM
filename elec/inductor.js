@@ -50,16 +50,10 @@ class Inductor extends TogglableElemtnt {
 
   drawframe(ctx) {
     let y;
-    let th = 0;
-    let dTh = (this.wave * (2 * Math.PI)) / (this.xEnd - this.xStart);
-
     let a = new Point(this.xStart, this.y0);
     let b = new Point();
-    for (let x = this.xStart; x <= this.xEnd; x += 1) {
-      y = this.y0 + this.amp * Math.sin(th);
-      th += dTh;
-      b.x = x;
-      b.y = y;
+    for (b.x = this.xStart; b.x <= this.xEnd; b.x += 1) {
+      b.y = this.calc(b.x);
       drawLine(ctx, a, b, "black", 4);
       a.x = b.x;
       a.y = b.y;
