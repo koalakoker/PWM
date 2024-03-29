@@ -11,12 +11,12 @@ setInterval(draw, 1000 / fps);
 
 // Inductor
 let amp = 50;
+let leg = 50;
 let xStart = 100;
 let xEnd = canvas.width - 100;
-let y0 = canvas.height / 2;
+let y0 = canvas.height / 2 - leg * 2;
 let wave = 10;
-let leg = 50;
-let bottomY = y0 + 2 * leg;
+let bottomY = y0 + 4 * leg;
 let inductor = new Inductor(amp, xStart, xEnd, y0, wave, 4);
 
 // GenSin
@@ -32,11 +32,11 @@ circuit.add(
   new Conductor(
     new Point(xStart - leg, bottomY),
     new Point(xStart - leg, y0),
-    4
+    8
   )
 );
 circuit.add(
-  new Conductor(new Point(xEnd + leg, y0), new Point(xEnd + leg, bottomY), 4)
+  new Conductor(new Point(xEnd + leg, y0), new Point(xEnd + leg, bottomY), 8)
 );
 circuit.add(
   new Conductor(
@@ -52,6 +52,12 @@ circuit.add(
     8
   )
 );
+
+// // Set Omega
+// circuit.element.forEach((element) => {
+//   element.omega = 0;
+//   element.th = Math.PI / 2;
+// });
 
 //draw();
 

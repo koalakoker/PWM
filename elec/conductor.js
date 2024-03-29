@@ -9,6 +9,7 @@ class Conductor extends TogglableElemtnt {
     this.off = 0;
     this.segment = segment;
     this.speed = 0;
+    this.speedFactor = 0.2;
     this.th = 0;
     this.omega = 0.04;
   }
@@ -33,9 +34,9 @@ class Conductor extends TogglableElemtnt {
     }
   }
   update() {
-    this.speed = Math.sin(this.th) / 10;
+    this.speed = Math.sin(this.th);
     this.th += this.omega;
-    this.off += this.speed;
+    this.off += this.speed * this.speedFactor;
     if (this.off > 1) {
       this.off = 0;
     }

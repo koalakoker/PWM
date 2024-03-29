@@ -15,6 +15,7 @@ class Inductor extends TogglableElemtnt {
     this.off = 0;
     this.step = 5;
     this.speed = 0.0;
+    this.speedFactor = 1;
     this.th = 0;
     this.omega = 0.04;
     this.flux = new Vector("blue", this.speed, 0, {
@@ -27,7 +28,7 @@ class Inductor extends TogglableElemtnt {
     this.speed = Math.sin(this.th);
     this.flux.mag = this.speed;
     this.th += this.omega;
-    this.off += this.speed;
+    this.off += this.speed * this.speedFactor;
     if (this.off > this.step) {
       this.off = 0;
     }
