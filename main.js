@@ -16,7 +16,11 @@ let xEnd = canvas.width - 100;
 let y0 = canvas.height / 2;
 let wave = 10;
 let leg = 50;
-let inductor = new Inductor(amp, xStart, xEnd, y0, wave, leg);
+let bottomY = y0 + 2 * leg;
+let inductor = new Inductor(amp, xStart, xEnd, y0, wave, 4);
+
+// GenSin
+let genSin = new GenSin(new Point(canvas.width / 2, bottomY), 30, 4, 14, 2);
 
 let circuit = new Circuit();
 circuit.add(inductor);
@@ -26,29 +30,35 @@ circuit.add(
 circuit.add(new Conductor(new Point(xEnd, y0), new Point(xEnd + leg, y0), 2));
 circuit.add(
   new Conductor(
-    new Point(xStart - leg, y0 + 2 * leg),
+    new Point(xStart - leg, bottomY),
     new Point(xStart - leg, y0),
     4
   )
 );
 circuit.add(
+  new Conductor(new Point(xEnd + leg, y0), new Point(xEnd + leg, bottomY), 4)
+);
+circuit.add(
   new Conductor(
-    new Point(xEnd + leg, y0),
-    new Point(xEnd + leg, y0 + 2 * leg),
-    4
+    new Point(genSin.center.x - genSin.rad, bottomY),
+    new Point(xStart - leg, bottomY),
+    8
   )
 );
 circuit.add(
   new Conductor(
-    new Point(xEnd + leg, y0 + 2 * leg),
-    new Point(xStart - leg, y0 + 2 * leg),
-    16
+    new Point(xEnd + leg, bottomY),
+    new Point(genSin.center.x + genSin.rad, bottomY),
+    8
   )
 );
+
+//draw();
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   circuit.draw(ctx);
+  genSin.draw(ctx);
 }
 
 function keypressed(e) {

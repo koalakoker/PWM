@@ -1,5 +1,5 @@
 class Inductor extends TogglableElemtnt {
-  constructor(amp, xStart, xEnd, y0, wave) {
+  constructor(amp, xStart, xEnd, y0, wave, width) {
     super(() => {
       this.th = 0;
       this.speed = 0;
@@ -9,6 +9,7 @@ class Inductor extends TogglableElemtnt {
     this.xEnd = xEnd;
     this.y0 = y0;
     this.wave = wave;
+    this.width = width;
 
     this.dTh = (this.wave * (2 * Math.PI)) / (this.xEnd - this.xStart);
     this.off = 0;
@@ -55,7 +56,7 @@ class Inductor extends TogglableElemtnt {
     let b = new Point();
     for (b.x = this.xStart; b.x <= this.xEnd; b.x += 1) {
       b.y = this.calc(b.x);
-      drawLine(ctx, a, b, "black", 4);
+      drawLine(ctx, a, b, "black", this.width);
       a.x = b.x;
       a.y = b.y;
     }
