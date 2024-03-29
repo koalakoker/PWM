@@ -1,14 +1,14 @@
 class Conductor extends TogglableElemtnt {
-  constructor() {
+  constructor(a, b, segment) {
     super(() => {
       this.off = 0;
       this.th = 0;
     });
-    this.a = new Point(100, 200);
-    this.b = new Point(200, 50);
+    this.a = a;
+    this.b = b;
     this.off = 0;
-    this.segment = 5;
-    this.speed = 0.05;
+    this.segment = segment;
+    this.speed = 0;
     this.th = 0;
     this.omega = 0.04;
   }

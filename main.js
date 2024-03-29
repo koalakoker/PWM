@@ -18,18 +18,41 @@ let wave = 10;
 let leg = 50;
 let inductor = new Inductor(amp, xStart, xEnd, y0, wave, leg);
 
-// Conductor
-let conductor = new Conductor();
+let circuit = new Circuit();
+circuit.add(inductor);
+circuit.add(
+  new Conductor(new Point(xStart - leg, y0), new Point(xStart, y0), 2)
+);
+circuit.add(new Conductor(new Point(xEnd, y0), new Point(xEnd + leg, y0), 2));
+circuit.add(
+  new Conductor(
+    new Point(xStart - leg, y0 + 2 * leg),
+    new Point(xStart - leg, y0),
+    4
+  )
+);
+circuit.add(
+  new Conductor(
+    new Point(xEnd + leg, y0),
+    new Point(xEnd + leg, y0 + 2 * leg),
+    4
+  )
+);
+circuit.add(
+  new Conductor(
+    new Point(xEnd + leg, y0 + 2 * leg),
+    new Point(xStart - leg, y0 + 2 * leg),
+    16
+  )
+);
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  inductor.draw(ctx);
-  conductor.draw(ctx);
+  circuit.draw(ctx);
 }
 
 function keypressed(e) {
   if (e.code === "Space") {
-    inductor.toggle();
-    conductor.toggle();
+    circuit.toggle();
   }
 }
