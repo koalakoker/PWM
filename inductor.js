@@ -66,6 +66,8 @@ class Inductor {
     ctx.stroke();
   }
 
+  circuit(ctx) {}
+
   calc(x) {
     if (x > this.xStart - this.leg && x < this.xStart) {
       return this.y0;
