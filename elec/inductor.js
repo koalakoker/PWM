@@ -28,7 +28,7 @@ class Inductor extends TogglableElemtnt {
   }
 
   draw(ctx) {
-    this.frame(ctx);
+    this.drawframe(ctx);
     if (this.isOn()) {
       this.flux.draw(ctx);
       this.electron(ctx);
@@ -48,21 +48,22 @@ class Inductor extends TogglableElemtnt {
     }
   }
 
-  frame(ctx) {
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 4;
-    ctx.beginPath();
-
+  drawframe(ctx) {
     let y;
     let th = 0;
     let dTh = (this.wave * (2 * Math.PI)) / (this.xEnd - this.xStart);
-    ctx.moveTo(this.xStart, this.y0);
+
+    let a = new Point(this.xStart, this.y0);
+    let b = new Point();
     for (let x = this.xStart; x <= this.xEnd; x += 1) {
       y = this.y0 + this.amp * Math.sin(th);
       th += dTh;
-      ctx.lineTo(x, y);
+      b.x = x;
+      b.y = y;
+      drawLine(ctx, a, b, "black", 4);
+      a.x = b.x;
+      a.y = b.y;
     }
-    ctx.stroke();
   }
 
   circuit(ctx) {}
