@@ -1,5 +1,9 @@
-class Inductor {
+class Inductor extends TogglableElemtnt {
   constructor(amp, xStart, xEnd, y0, wave, leg) {
+    super(() => {
+      this.th = 0;
+      this.speed = 0;
+    });
     this.amp = amp;
     this.xStart = xStart;
     this.xEnd = xEnd;
@@ -11,7 +15,6 @@ class Inductor {
     this.step = 5;
     this.speed = 0.0;
     this.th = 0;
-    this.on = false;
     this.flux = new Vector("blue", this.speed, 0, {
       x: (xEnd + xStart) / 2,
       y: y0,
@@ -26,7 +29,7 @@ class Inductor {
 
   draw(ctx) {
     this.frame(ctx);
-    if (this.on) {
+    if (this.isOn()) {
       this.flux.draw(ctx);
       this.electron(ctx);
     }
@@ -81,11 +84,5 @@ class Inductor {
       return y;
     }
     return;
-  }
-
-  toggle() {
-    this.on = !this.on;
-    this.th = 0;
-    this.speed = 0;
   }
 }

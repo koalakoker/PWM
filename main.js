@@ -23,12 +23,12 @@ let conductor = new Conductor();
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //inductor.draw(ctx);
+  inductor.draw(ctx);
   conductor.draw(ctx);
 }
 
 function keypressed(e) {
   if (e.code === "Space") {
-    //inductor.toggle();
+    inductor.toggle();
   }
 }
