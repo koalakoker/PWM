@@ -1,8 +1,8 @@
 class Inductor extends TogglableElemtnt {
-  constructor(amp, xStart, xEnd, y0, wave, width) {
+  constructor(amp, xStart, xEnd, y0, wave, width, angle = 0) {
     super(() => {
-      this.th = 0;
-      this.speed = 0;
+      this.th = angle;
+      this.speed = Math.sin(this.th);
     });
     this.amp = amp;
     this.xStart = xStart;
@@ -10,6 +10,7 @@ class Inductor extends TogglableElemtnt {
     this.y0 = y0;
     this.wave = wave;
     this.width = width;
+    this.angle = angle;
 
     this.dTh = (this.wave * (2 * Math.PI)) / (this.xEnd - this.xStart);
     this.off = 0;
@@ -19,7 +20,7 @@ class Inductor extends TogglableElemtnt {
     this.th = 0;
     this.omega = 0.04;
     this.flux = new Vector("blue", this.speed, 0, {
-      x: (xEnd + xStart) / 2,
+      x: xStart,
       y: y0,
     });
   }
@@ -35,17 +36,22 @@ class Inductor extends TogglableElemtnt {
   }
 
   draw(ctx) {
+    ctx.save();
+    ctx.translate(300, 300);
+    ctx.rotate(this.angle);
+
     this.drawframe(ctx);
     if (this.isOn()) {
       this.flux.draw(ctx);
       this.drawElectron(ctx);
     }
+    ctx.restore();
     this.animate();
   }
 
   drawElectron(ctx) {
     let p = new Point();
-    for (p.x = xStart + this.off; p.x < xEnd; p.x += this.step) {
+    for (p.x = this.xStart + this.off; p.x < this.xEnd; p.x += this.step) {
       p.y = parseInt(this.calc(p.x));
       drawPoint(ctx, p, "red", 5);
     }
