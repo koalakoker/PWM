@@ -24,9 +24,9 @@ class Inductor extends TogglableElemtnt {
     this.dTh = (this.wave * (2 * Math.PI)) / (this.xEnd - this.xStart);
     this.off = 0;
     this.step = 5;
-    this.speed = 0.0;
+    this.th = angle;
+    this.speed = Math.sin(this.th);
     this.speedFactor = 1;
-    this.th = 0;
     this.omega = 0.04;
     this.flux = new Vector(fluxColor, this.speed, 0, {
       x: xStart,

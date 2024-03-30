@@ -46,4 +46,8 @@ class Vector {
   update(dt) {
     this.angle += this.speed * dt;
   }
+
+  getMag() {
+    return this.mag;
+  }
 }
