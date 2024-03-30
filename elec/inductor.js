@@ -1,5 +1,14 @@
 class Inductor extends TogglableElemtnt {
-  constructor(amp, xStart, xEnd, y0, wave, width, angle = 0) {
+  constructor(
+    amp,
+    xStart,
+    xEnd,
+    y0,
+    wave,
+    width,
+    angle = 0,
+    fluxColor = "blue"
+  ) {
     super(() => {
       this.th = angle;
       this.speed = Math.sin(this.th);
@@ -19,7 +28,7 @@ class Inductor extends TogglableElemtnt {
     this.speedFactor = 1;
     this.th = 0;
     this.omega = 0.04;
-    this.flux = new Vector("blue", this.speed, 0, {
+    this.flux = new Vector(fluxColor, this.speed, 0, {
       x: xStart,
       y: y0,
     });
