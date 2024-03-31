@@ -1,9 +1,10 @@
 class Axis {
-  constructor(o, len, color, width) {
+  constructor(o, min, max, color, width) {
     this.color = color;
     this.width = width;
     this.o = o;
-    this.len = len;
+    this.min = min;
+    this.max = max;
     this.a = 0;
     this.b = 0;
   }

@@ -1,15 +1,19 @@
-function drawLine(ctx, a, b, color, width) {
+function drawLine(ctx, a, b, color, width, dash = []) {
   ctx.strokeStyle = color;
   ctx.lineWidth = width;
+  ctx.setLineDash(dash);
+
   ctx.beginPath();
   ctx.moveTo(a.x, a.y);
   ctx.lineTo(b.x, b.y);
   ctx.stroke();
 }
 
-function drawArrow(ctx, a, b, color, width, arrowSize) {
+function drawArrow(ctx, a, b, color, width, arrowSize, dash = []) {
   ctx.strokeStyle = color;
   ctx.lineWidth = width;
+  ctx.setLineDash(dash);
+
   ctx.beginPath();
   ctx.moveTo(a.x, a.y);
   ctx.lineTo(b.x, b.y);

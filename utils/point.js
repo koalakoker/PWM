@@ -3,6 +3,9 @@ class Point {
     this.x = x;
     this.y = y;
   }
+  add(x, y) {
+    return new Point(this.x + x, this.y + y);
+  }
 }
 
 function lerpPoint(a, b, o) {

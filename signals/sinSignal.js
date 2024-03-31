@@ -12,8 +12,8 @@ class SinSignal extends TogglableElement {
     this.width = width;
     this.dTh = (this.wave * (2 * Math.PI)) / (this.xEnd - this.xStart);
     let o = new Point(xStart, y0);
-    this.oAx = new OrizzontalAxis(o, xEnd - xStart + 30, "black", 2);
-    this.vAx = new VarticalAxis(o, amp + 50, "black", 2);
+    this.oAx = new OrizzontalAxis(o, -30, xEnd - xStart + 30, "black", 2);
+    this.vAx = new VerticalAxis(o, -(amp + 50), amp + 50, "black", 2);
   }
 
   draw(ctx) {
@@ -41,6 +41,11 @@ class SinSignal extends TogglableElement {
     let x = lerp(this.xStart, this.xEnd, this.offset);
     let p = new Point(x, this.calc(x));
     drawPoint(ctx, p, "black", 5);
+
+    let i = x - this.xStart;
+    let a = this.vAx.a.add(i, 0);
+    let b = this.vAx.b.add(i, 0);
+    drawLine(ctx, a, b, "black", 2, [5, 5]);
     this.animatePoint();
   }
 
