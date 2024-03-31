@@ -11,10 +11,15 @@ class SinSignal extends TogglableElement {
     this.color = color;
     this.width = width;
     this.dTh = (this.wave * (2 * Math.PI)) / (this.xEnd - this.xStart);
+    let o = new Point(xStart, y0);
+    this.oAx = new OrizzontalAxis(o, xEnd - xStart + 30, "black", 2);
+    this.vAx = new VarticalAxis(o, amp + 50, "black", 2);
   }
 
   draw(ctx) {
     this.drawLine(ctx);
+    this.oAx.draw(ctx);
+    this.vAx.draw(ctx);
     if (isOn) {
       this.drawPoint(ctx);
     }
