@@ -1,4 +1,4 @@
-class Inductor extends TogglableElemtnt {
+class Inductor extends TogglableElement {
   constructor(
     amp,
     xStart,

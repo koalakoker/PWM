@@ -1,4 +1,4 @@
-class TogglableElemtnt {
+class TogglableElement {
   constructor(cb) {
     this.on = false;
     this.cb = cb;
