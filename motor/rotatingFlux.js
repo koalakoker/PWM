@@ -1,4 +1,5 @@
 class RotatingFlux extends TogglableElement {
+  static fluxColor = ["red", "green", "blue"];
   constructor() {
     super(() => {
       this.rotFluxCircuit.toggle();
@@ -8,7 +9,6 @@ class RotatingFlux extends TogglableElement {
     let angle = 0;
     let wave = 10;
 
-    let fluxColor = ["red", "green", "blue"];
     this.rotFluxCircuit = new Circuit();
     this.fluxes = [];
     for (let i = 0; i < 3; i++) {
@@ -19,7 +19,7 @@ class RotatingFlux extends TogglableElement {
         wave,
         3,
         angle,
-        fluxColor[i]
+        RotatingFlux.fluxColor[i]
       );
       this.fluxes.push(inductor.flux);
       this.rotFluxCircuit.add(inductor);

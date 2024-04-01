@@ -9,22 +9,33 @@ let chh = canvas.height / 2;
 // Animation Set and run
 let fps = 60;
 let dt = 1 / fps;
-setInterval(draw, 1000 / fps);
+let intervalID = setInterval(draw, 1000 / fps);
+let running = true;
 let isOn = false;
 
 //let { circuit, genSin } = createInductor();
 
 // Sin signal
-let sinSignalU = new SinSignal("red", 3, 50, 3, 700, 1100, chh);
-//let sinSignalV = new SinSignal("red", 3, 50, 3, 700, 1100, chh);
-//let sinSignalW = new SinSignal("red", 3, 50, 3, 700, 1100, chh);
+let sinSignals = [];
+let spaceV = canvas.height / 3;
+let yPos = spaceV / 2;
+let angle = 0;
+for (let i = 0; i < 3; i++) {
+  sinSignals.push(
+    new SinSignal(RotatingFlux.fluxColor[i], 3, 50, 3, 700, 1100, yPos, angle)
+  );
+  yPos += spaceV;
+  angle += (2 * Math.PI) / 3;
+}
 
 let rotatingFlux = new RotatingFlux();
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (typeof sinSignalU !== "undefined") {
-    sinSignalU.draw(ctx);
+  if (typeof sinSignals !== "undefined") {
+    sinSignals.forEach((sinSignal) => {
+      sinSignal.draw(ctx);
+    });
   }
   if (typeof circuit !== "undefined") {
     circuit.draw(ctx);
@@ -40,8 +51,10 @@ function draw() {
 function keypressed(e) {
   if (e.code === "Space") {
     isOn = !isOn;
-    if (typeof sinSignalU !== "undefined") {
-      sinSignalU.toggle();
+    if (typeof sinSignals !== "undefined") {
+      sinSignals.forEach((sinSignal) => {
+        sinSignal.toggle();
+      });
     }
     if (typeof circuit !== "undefined") {
       circuit.toggle();
@@ -52,6 +65,15 @@ function keypressed(e) {
   }
   if (e.code === "ArrowRight") {
     draw();
+  }
+  if (e.code === "KeyP") {
+    if (running) {
+      clearInterval(intervalID);
+      running = false;
+    } else {
+      intervalID = setInterval(draw, 1000 / fps);
+      running = true;
+    }
   }
 }
 

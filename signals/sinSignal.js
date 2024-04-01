@@ -1,5 +1,5 @@
 class SinSignal extends TogglableElement {
-  constructor(color, width, amp, wave, xStart, xEnd, y0) {
+  constructor(color, width, amp, wave, xStart, xEnd, y0, phase = 0) {
     super(() => {
       this.offset = 0;
     });
@@ -7,13 +7,14 @@ class SinSignal extends TogglableElement {
     this.xStart = xStart;
     this.xEnd = xEnd;
     this.y0 = y0;
+    this.phase = phase;
     this.wave = wave;
     this.color = color;
     this.width = width;
     this.dTh = (this.wave * (2 * Math.PI)) / (this.xEnd - this.xStart);
     let o = new Point(xStart, y0);
     this.oAx = new OrizzontalAxis(o, -30, xEnd - xStart + 30, "black", 2);
-    this.vAx = new VerticalAxis(o, -(amp + 50), amp + 50, "black", 2);
+    this.vAx = new VerticalAxis(o, -(amp + 30), amp + 30, "black", 2);
     this.omega = 0.04;
   }
 
@@ -60,7 +61,7 @@ class SinSignal extends TogglableElement {
   calc(x) {
     if (x >= this.xStart && x <= this.xEnd) {
       let i = x - this.xStart;
-      let y = this.y0 - this.amp * Math.sin(this.dTh * i);
+      let y = this.y0 - this.amp * Math.sin(this.dTh * i + this.phase);
       return y;
     }
     return;
