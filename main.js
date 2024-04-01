@@ -12,23 +12,33 @@ let dt = 1 / fps;
 setInterval(draw, 1000 / fps);
 let isOn = false;
 
-let { circuit, genSin } = createInductor();
+//let { circuit, genSin } = createInductor();
 
 // Sin signal
-let sinSignal = new SinSignal("red", 3, 50, 3, 700, 1100, chh);
+//let sinSignal = new SinSignal("red", 3, 50, 3, 700, 1100, chh);
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  sinSignal.draw(ctx);
-  circuit.draw(ctx);
-  genSin.draw(ctx);
+  if (typeof sinSignal !== "undefined") {
+    sinSignal.draw(ctx);
+  }
+  if (typeof circuit !== "undefined") {
+    circuit.draw(ctx);
+  }
+  if (typeof genSin !== "undefined") {
+    genSin.draw(ctx);
+  }
 }
 
 function keypressed(e) {
   if (e.code === "Space") {
     isOn = !isOn;
-    sinSignal.toggle();
-    circuit.toggle();
+    if (typeof sinSignal !== "undefined") {
+      sinSignal.toggle();
+    }
+    if (typeof circuit !== "undefined") {
+      circuit.toggle();
+    }
   }
   if (e.code === "ArrowRight") {
     draw();
