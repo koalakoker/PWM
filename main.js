@@ -15,7 +15,9 @@ let isOn = false;
 //let { circuit, genSin } = createInductor();
 
 // Sin signal
-//let sinSignal = new SinSignal("red", 3, 50, 3, 700, 1100, chh);
+let sinSignal = new SinSignal("red", 3, 50, 3, 700, 1100, chh);
+
+let rotFluxCircuit = createRotatingFlux();
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -105,4 +107,23 @@ function createInductor() {
     )
   );
   return { circuit, genSin };
+}
+
+function createRotatingFlux() {
+  // Inductor
+  let len = 200;
+  let amp = 25;
+  let angle = 0;
+  let wave = 10;
+
+  let fluxColor = ["red", "green", "blue"];
+  let fluxes = [];
+  let circuit = new Circuit();
+  for (let i = 0; i < 3; i++) {
+    let inductor = new Inductor(amp, 0, len, 0, wave, 3, angle, fluxColor[i]);
+    fluxes.push(inductor.flux);
+    circuit.add(inductor);
+    angle += (2 * Math.PI) / 3;
+  }
+  return circuit;
 }
