@@ -14,6 +14,7 @@ class SinSignal extends TogglableElement {
     let o = new Point(xStart, y0);
     this.oAx = new OrizzontalAxis(o, -30, xEnd - xStart + 30, "black", 2);
     this.vAx = new VerticalAxis(o, -(amp + 50), amp + 50, "black", 2);
+    this.omega = 0.04;
   }
 
   draw(ctx) {
@@ -50,7 +51,7 @@ class SinSignal extends TogglableElement {
   }
 
   animatePoint() {
-    this.offset += 0.01;
+    this.offset += this.omega / (Math.PI * 2 * this.wave);
     if (this.offset >= 1) {
       this.offset = 0;
     }

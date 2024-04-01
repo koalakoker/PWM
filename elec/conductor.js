@@ -1,4 +1,4 @@
-class Conductor extends TogglableElemtnt {
+class Conductor extends TogglableElement {
   constructor(a, b, segment) {
     super(() => {
       this.off = 0;

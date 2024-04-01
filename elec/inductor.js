@@ -1,37 +1,36 @@
 class Inductor extends TogglableElement {
   constructor(
     amp,
-    xStart,
-    xEnd,
-    y0,
+    startPoint,
+    len,
     wave,
     width,
     angle = 0,
-    fluxColor = "blue"
+    fluxColor = "blue",
+    fluxCenter = {
+      x: 0,
+      y: 0,
+    }
   ) {
     super(() => {
       this.th = angle;
       this.speed = Math.sin(this.th);
     });
     this.amp = amp;
-    this.xStart = xStart;
-    this.xEnd = xEnd;
-    this.y0 = y0;
+    this.startPoint = startPoint;
+    this.len = len;
     this.wave = wave;
     this.width = width;
     this.angle = angle;
 
-    this.dTh = (this.wave * (2 * Math.PI)) / (this.xEnd - this.xStart);
+    this.dTh = (this.wave * (2 * Math.PI)) / this.len;
     this.off = 0;
     this.step = 5;
     this.th = angle;
     this.speed = Math.sin(this.th);
     this.speedFactor = 1;
     this.omega = 0.04;
-    this.flux = new Vector(fluxColor, this.speed, 0, {
-      x: xStart,
-      y: y0,
-    });
+    this.flux = new Vector(fluxColor, this.speed, 0, fluxCenter);
   }
 
   animate() {
@@ -46,7 +45,7 @@ class Inductor extends TogglableElement {
 
   draw(ctx) {
     ctx.save();
-    ctx.translate(300, 300);
+    ctx.translate(this.startPoint.x, this.startPoint.y);
     ctx.rotate(this.angle);
 
     this.drawframe(ctx);
@@ -58,19 +57,11 @@ class Inductor extends TogglableElement {
     this.animate();
   }
 
-  drawElectron(ctx) {
-    let p = new Point();
-    for (p.x = this.xStart + this.off; p.x < this.xEnd; p.x += this.step) {
-      p.y = parseInt(this.calc(p.x));
-      drawPoint(ctx, p, "red", 5);
-    }
-  }
-
   drawframe(ctx) {
     let y;
-    let a = new Point(this.xStart, this.y0);
+    let a = new Point(0, 0);
     let b = new Point();
-    for (b.x = this.xStart; b.x <= this.xEnd; b.x += 1) {
+    for (b.x = 0; b.x <= this.len; b.x += 1) {
       b.y = this.calc(b.x);
       drawLine(ctx, a, b, "black", this.width);
       a.x = b.x;
@@ -78,12 +69,17 @@ class Inductor extends TogglableElement {
     }
   }
 
-  circuit(ctx) {}
+  drawElectron(ctx) {
+    let p = new Point();
+    for (p.x = this.off; p.x < this.len; p.x += this.step) {
+      p.y = parseInt(this.calc(p.x));
+      drawPoint(ctx, p, "red", 5);
+    }
+  }
 
   calc(x) {
-    if (x >= this.xStart && x <= this.xEnd) {
-      let i = x - this.xStart;
-      let y = this.y0 + this.amp * Math.sin(this.dTh * i);
+    if (x >= 0 && x <= this.len) {
+      let y = this.amp * Math.sin(this.dTh * x);
       return y;
     }
     return;

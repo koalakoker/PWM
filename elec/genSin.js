@@ -7,9 +7,8 @@ class GenSin {
 
     this.sinSymb = new Inductor(
       this.rad - this.margin,
-      this.center.x - this.rad + this.margin,
-      this.center.x + this.rad - this.margin,
-      this.center.y,
+      new Point(this.center.x - this.rad + this.margin, this.center.y),
+      2 * (this.rad - this.margin),
       1,
       symbWidth
     );
