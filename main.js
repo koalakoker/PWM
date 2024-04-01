@@ -30,6 +30,15 @@ function draw() {
   if (typeof genSin !== "undefined") {
     genSin.draw(ctx);
   }
+  if (typeof rotFluxCircuit !== "undefined") {
+    rotFluxCircuit.draw(ctx);
+    // if (isOn) {
+    //   ctx.save();
+    //   ctx.translate(300, 300);
+    //   computeResultantFlux().draw(ctx);
+    //   ctx.restore();
+    // }
+  }
 }
 
 function keypressed(e) {
@@ -120,7 +129,15 @@ function createRotatingFlux() {
   let fluxes = [];
   let circuit = new Circuit();
   for (let i = 0; i < 3; i++) {
-    let inductor = new Inductor(amp, 0, len, 0, wave, 3, angle, fluxColor[i]);
+    let inductor = new Inductor(
+      amp,
+      new Point(300, 300),
+      len,
+      wave,
+      3,
+      angle,
+      fluxColor[i]
+    );
     fluxes.push(inductor.flux);
     circuit.add(inductor);
     angle += (2 * Math.PI) / 3;
