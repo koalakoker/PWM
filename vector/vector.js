@@ -16,6 +16,7 @@ class Vector {
       y2 = y1 - this.mag * this.factor * Math.sin(this.angle);
     let arrowSize = this.lineWidth + 20;
     ctx.strokeStyle = this.color;
+    ctx.setLineDash([]);
     ctx.lineWidth = this.lineWidth;
     ctx.beginPath();
     ctx.moveTo(x1, y1);

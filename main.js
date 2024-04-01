@@ -17,7 +17,8 @@ let isOn = false;
 // Sin signal
 let sinSignal = new SinSignal("red", 3, 50, 3, 700, 1100, chh);
 
-let rotFluxCircuit = createRotatingFlux();
+let { rotFluxCircuit, fluxes } = createRotatingFlux();
+let fluxVector = new Vector("black", 1, 0, { x: 300, y: 300 });
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -32,12 +33,12 @@ function draw() {
   }
   if (typeof rotFluxCircuit !== "undefined") {
     rotFluxCircuit.draw(ctx);
-    // if (isOn) {
-    //   ctx.save();
-    //   ctx.translate(300, 300);
-    //   computeResultantFlux().draw(ctx);
-    //   ctx.restore();
-    // }
+    if (isOn) {
+      let { mag, angle } = computeResultantFlux();
+      fluxVector.angle = angle;
+      fluxVector.mag = mag;
+      fluxVector.draw(ctx);
+    }
   }
 }
 
@@ -49,6 +50,9 @@ function keypressed(e) {
     }
     if (typeof circuit !== "undefined") {
       circuit.toggle();
+    }
+    if (typeof rotFluxCircuit !== "undefined") {
+      rotFluxCircuit.toggle();
     }
   }
   if (e.code === "ArrowRight") {
@@ -126,8 +130,8 @@ function createRotatingFlux() {
   let wave = 10;
 
   let fluxColor = ["red", "green", "blue"];
+  let rotFluxCircuit = new Circuit();
   let fluxes = [];
-  let circuit = new Circuit();
   for (let i = 0; i < 3; i++) {
     let inductor = new Inductor(
       amp,
@@ -139,8 +143,26 @@ function createRotatingFlux() {
       fluxColor[i]
     );
     fluxes.push(inductor.flux);
-    circuit.add(inductor);
+    rotFluxCircuit.add(inductor);
     angle += (2 * Math.PI) / 3;
   }
-  return circuit;
+  return { rotFluxCircuit, fluxes };
+}
+
+function computeResultantFlux() {
+  let dir = 0;
+  let xTot = 0;
+  let yTot = 0;
+  for (let i = 0; i < fluxes.length; i++) {
+    const flux = fluxes[i];
+    let mag = flux.getMag();
+    let x = mag * Math.cos(dir);
+    let y = mag * Math.sin(dir);
+    xTot += x;
+    yTot += y;
+    dir -= (2 * Math.PI) / 3;
+  }
+  let mag = Math.sqrt(xTot * xTot + yTot * yTot) * 0.8;
+  let angle = Math.atan2(yTot, xTot);
+  return { mag, angle };
 }
