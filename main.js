@@ -15,15 +15,16 @@ let isOn = false;
 //let { circuit, genSin } = createInductor();
 
 // Sin signal
-let sinSignal = new SinSignal("red", 3, 50, 3, 700, 1100, chh);
+let sinSignalU = new SinSignal("red", 3, 50, 3, 700, 1100, chh);
+//let sinSignalV = new SinSignal("red", 3, 50, 3, 700, 1100, chh);
+//let sinSignalW = new SinSignal("red", 3, 50, 3, 700, 1100, chh);
 
-let { rotFluxCircuit, fluxes } = createRotatingFlux();
-let fluxVector = new Vector("black", 1, 0, { x: 300, y: 300 });
+let rotatingFlux = new RotatingFlux();
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (typeof sinSignal !== "undefined") {
-    sinSignal.draw(ctx);
+  if (typeof sinSignalU !== "undefined") {
+    sinSignalU.draw(ctx);
   }
   if (typeof circuit !== "undefined") {
     circuit.draw(ctx);
@@ -31,28 +32,22 @@ function draw() {
   if (typeof genSin !== "undefined") {
     genSin.draw(ctx);
   }
-  if (typeof rotFluxCircuit !== "undefined") {
-    rotFluxCircuit.draw(ctx);
-    if (isOn) {
-      let { mag, angle } = computeResultantFlux();
-      fluxVector.angle = angle;
-      fluxVector.mag = mag;
-      fluxVector.draw(ctx);
-    }
+  if (typeof rotatingFlux !== "undefined") {
+    rotatingFlux.draw(ctx);
   }
 }
 
 function keypressed(e) {
   if (e.code === "Space") {
     isOn = !isOn;
-    if (typeof sinSignal !== "undefined") {
-      sinSignal.toggle();
+    if (typeof sinSignalU !== "undefined") {
+      sinSignalU.toggle();
     }
     if (typeof circuit !== "undefined") {
       circuit.toggle();
     }
-    if (typeof rotFluxCircuit !== "undefined") {
-      rotFluxCircuit.toggle();
+    if (typeof rotatingFlux !== "undefined") {
+      rotatingFlux.toggle();
     }
   }
   if (e.code === "ArrowRight") {
@@ -120,49 +115,4 @@ function createInductor() {
     )
   );
   return { circuit, genSin };
-}
-
-function createRotatingFlux() {
-  // Inductor
-  let len = 200;
-  let amp = 25;
-  let angle = 0;
-  let wave = 10;
-
-  let fluxColor = ["red", "green", "blue"];
-  let rotFluxCircuit = new Circuit();
-  let fluxes = [];
-  for (let i = 0; i < 3; i++) {
-    let inductor = new Inductor(
-      amp,
-      new Point(300, 300),
-      len,
-      wave,
-      3,
-      angle,
-      fluxColor[i]
-    );
-    fluxes.push(inductor.flux);
-    rotFluxCircuit.add(inductor);
-    angle += (2 * Math.PI) / 3;
-  }
-  return { rotFluxCircuit, fluxes };
-}
-
-function computeResultantFlux() {
-  let dir = 0;
-  let xTot = 0;
-  let yTot = 0;
-  for (let i = 0; i < fluxes.length; i++) {
-    const flux = fluxes[i];
-    let mag = flux.getMag();
-    let x = mag * Math.cos(dir);
-    let y = mag * Math.sin(dir);
-    xTot += x;
-    yTot += y;
-    dir -= (2 * Math.PI) / 3;
-  }
-  let mag = Math.sqrt(xTot * xTot + yTot * yTot) * 0.8;
-  let angle = Math.atan2(yTot, xTot);
-  return { mag, angle };
 }
