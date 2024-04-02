@@ -1,0 +1,1 @@
+electron-packager . .\electronApp.js --platform=win32 --arch=x64
