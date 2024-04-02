@@ -3,3 +3,5 @@ package-lock.json
 dist
 electron.js-darwin-x64
 .DS_Store
+dist
+exe
