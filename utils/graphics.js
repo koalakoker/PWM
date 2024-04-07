@@ -41,6 +41,22 @@ function drawPoint(ctx, p, color, rad) {
   ctx.fill();
 }
 
+function startPoly(ctx, p, color, width, dash = []) {
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.setLineDash(dash);
+  ctx.beginPath();
+  ctx.moveTo(p.x, p.y);
+}
+
+function moveTo(ctx, p) {
+  ctx.lineTo(p.x, p.y);
+}
+
+function endPoly(ctx) {
+  ctx.stroke();
+}
+
 function drawCircle(ctx, p, rad, color, width) {
   ctx.strokeStyle = color;
   ctx.lineWidth = width;
