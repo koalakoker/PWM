@@ -7,16 +7,54 @@ class Counter {
     this.mode = mode;
     this.origin = origin;
     this.periods = 3;
+    this.startCounting();
   }
   draw(ctx) {
+    this.startCounting();
     startPoly(ctx, this.origin, "black", 3);
     for (let x = 0; x < this.arr * this.periods + 1; x++) {
-      moveTo(ctx, new Point(this.origin.x + x, this.origin.y - this.calc(x)));
+      moveTo(ctx, new Point(this.origin.x + x, this.origin.y - this.calc()));
     }
     endPoly(ctx);
   }
-  calc(x) {
-    let y = x % this.arr;
-    return y;
+  calc() {
+    if (this.mode === Counter.countingUp) {
+      this.counter += 1;
+      if (this.counter > this.arr) {
+        this.counter = 0;
+      }
+    } else if (this.mode === Counter.countingDown) {
+      this.counter -= 1;
+      if (this.counter < 0) {
+        this.counter = this.arr;
+      }
+    } else if (this.mode === Counter.countingUpDown) {
+      if (this.direction === 0) {
+        this.counter += 1;
+        if (this.counter > this.arr) {
+          this.counter = this.arr - 1;
+          this.direction = 1;
+        }
+      } else {
+        this.counter -= 1;
+        if (this.counter < 0) {
+          this.counter = 1;
+          this.direction = 0;
+        }
+      }
+    }
+    return this.counter;
+  }
+  startCounting() {
+    if (
+      this.mode === Counter.countingUp ||
+      this.mode === Counter.countingUpDown
+    ) {
+      this.counter = 0;
+    }
+    if (this.mode === Counter.countingDown) {
+      this.counter = this.arr;
+    }
+    this.direction = 0;
   }
 }
