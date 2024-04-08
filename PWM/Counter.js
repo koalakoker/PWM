@@ -2,22 +2,28 @@ class Counter {
   static countingUp = 0;
   static countingUpDown = 1;
   static countingDown = 2;
-  constructor(arr, mode, origin) {
+  constructor(arr, mode) {
     this.arr = arr;
     this.mode = mode;
-    this.origin = origin;
     this.periods = 3;
     this.startCounting();
+    this.counterValues = [];
   }
   draw(ctx) {
     this.startCounting();
-    startPoly(ctx, this.origin, "black", 3);
-    for (let x = 0; x < this.arr * this.periods + 1; x++) {
-      moveTo(ctx, new Point(this.origin.x + x, this.origin.y - this.calc()));
+    startPoly(ctx, this.PWM.origin, "black", 3);
+    for (let x = 0; x < this.PWM.length; x++) {
+      let y = this.getCounter();
+      this.counterValues[x] = y;
+      moveTo(ctx, new Point(this.PWM.origin.x + x, this.PWM.origin.y - y));
+      this.step();
     }
     endPoly(ctx);
   }
-  calc() {
+  getCounter() {
+    return this.counter;
+  }
+  step() {
     if (this.mode === Counter.countingUp) {
       this.counter += 1;
       if (this.counter > this.arr) {
