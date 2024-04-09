@@ -27,4 +27,7 @@ class Compare {
   setValFromP(p) {
     this.val = this.PWM.origin.y - p.y;
   }
+  update(v) {
+    this.val = v;
+  }
 }

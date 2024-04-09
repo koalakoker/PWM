@@ -19,27 +19,8 @@ PWM2Button.addEventListener("change", handleRadioButtonChange);
 
 let ARR = document.getElementById("ARR");
 ARR.value = 186;
-ARR.addEventListener("keydown", (e) => {
-  if (e.code === "Enter") {
-    counter.update(ARR.value);
-  }
-});
-ARR.addEventListener("changedPos", (e) => {
-  let dy = e.detail.y - ARR.lastPos.y;
-  ARR.value = parseInt(ARR.value) + dy;
-  counter.update(ARR.value);
-  ARR.lastPos = new Point(e.detail.x, e.detail.y);
-});
-function mouseMoveHandler(e) {
-  let newEvent = new CustomEvent("changedPos", {
-    detail: { x: e.x, y: e.y },
-  });
-  ARR.dispatchEvent(newEvent);
-}
-ARR.addEventListener("mousedown", (e) => {
-  ARR.lastPos = new Point(e.x, e.y);
-  document.addEventListener("mousemove", mouseMoveHandler);
-});
-document.addEventListener("mouseup", (e) => {
-  document.removeEventListener("mousemove", mouseMoveHandler);
-});
+setInput(ARR, counter);
+
+let CCR = document.getElementById("Compare");
+CCR.value = 186 / 4;
+setInput(CCR, compare);
