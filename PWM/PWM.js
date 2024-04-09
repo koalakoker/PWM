@@ -6,7 +6,7 @@ class PWM {
     this.length = counter.arr * counter.periods + 1;
     this.compare = compare;
     this.compare.PWM = this;
-    this.output = new Output(1);
+    this.output = new Output(0);
     this.output.PWM = this;
   }
   draw(ctx) {
