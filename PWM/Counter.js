@@ -63,4 +63,7 @@ class Counter {
     }
     this.direction = 0;
   }
+  update(v) {
+    this.arr = v;
+  }
 }
