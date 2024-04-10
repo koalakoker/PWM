@@ -8,6 +8,7 @@ class PWM {
     this.compare.PWM = this;
     this.output = new Output(0);
     this.output.PWM = this;
+    this.duty = this.getDuty();
   }
   draw(ctx) {
     this.counter.draw(ctx); // Value of counter is stored in this.counter.counterValues
@@ -19,5 +20,21 @@ class PWM {
   }
   getEndX() {
     return this.origin.x + this.length;
+  }
+  getDuty() {
+    let duty;
+    if (this.output.mode === 0) {
+      duty = 1 - compare.val / counter.arr;
+    } else {
+      duty = compare.val / counter.arr;
+    }
+    return duty;
+  }
+  update(duty) {
+    if (this.output.mode === 0) {
+      this.compare.val = (1 - duty) * this.counter.arr;
+    } else {
+      this.compare.val = duty * this.counter.arr;
+    }
   }
 }

@@ -24,3 +24,7 @@ setInput(ARR, counter);
 let CCR = document.getElementById("Compare");
 CCR.value = 186 / 4;
 setInput(CCR, compare);
+
+let Duty = document.getElementById("Duty");
+Duty.value = 1 - 1 / 4;
+setInput(Duty, pwm);
