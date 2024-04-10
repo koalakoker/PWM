@@ -19,12 +19,12 @@ PWM2Button.addEventListener("change", handleRadioButtonChange);
 
 let ARR = document.getElementById("ARR");
 ARR.value = 186;
-setInput(ARR, counter);
+let ARRInput = new InputCtrl(ARR, counter);
 
 let CCR = document.getElementById("Compare");
 CCR.value = 186 / 4;
-setInput(CCR, compare);
+let CCRInput = new InputCtrl(CCR, compare);
 
 let Duty = document.getElementById("Duty");
 Duty.value = 1 - 1 / 4;
-setInput(Duty, pwm);
+let DutyInput = new InputCtrl(Duty, pwm, 0.01);
