@@ -1,8 +1,9 @@
 class InputCtrl {
-  constructor(input, obj, inc = 1) {
+  constructor(input, obj, inc = 1, digit = 2) {
     this.input = input;
     this.obj = obj;
     this.inc = inc;
+    this.digit = digit;
     this.regiserListeners();
     this.mouseMoveF = null;
   }
@@ -23,7 +24,9 @@ class InputCtrl {
 
     this.input.addEventListener("changedPos", (e) => {
       let dy = e.detail.y - this.input.lastPos.y;
-      this.input.value = parseFloat(this.input.value) + dy * this.inc;
+      this.input.value = parseFloat(
+        parseFloat(this.input.value) + dy * this.inc
+      ).toFixed(this.digit);
       this.obj.update(this.input.value);
       this.input.lastPos = new Point(e.detail.x, e.detail.y);
     });
@@ -37,5 +40,9 @@ class InputCtrl {
     document.addEventListener("mouseup", (e) => {
       document.removeEventListener("mousemove", this.mouseMoveF);
     });
+  }
+
+  set(v) {
+    this.input.value = parseFloat(v).toFixed(this.digit);
   }
 }

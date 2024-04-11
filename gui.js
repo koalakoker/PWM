@@ -18,13 +18,16 @@ PWM1Button.addEventListener("change", handleRadioButtonChange);
 PWM2Button.addEventListener("change", handleRadioButtonChange);
 
 let ARR = document.getElementById("ARR");
-ARR.value = 186;
-let ARRInput = new InputCtrl(ARR, counter);
+let ARRInput = new InputCtrl(ARR, counter, 1, 0);
+ARRInput.set(186);
 
 let CCR = document.getElementById("Compare");
-CCR.value = 186 / 4;
-let CCRInput = new InputCtrl(CCR, compare);
+let CCRInput = new InputCtrl(CCR, compare, 1, 0);
+CCRInput.set(186 / 4);
 
 let Duty = document.getElementById("Duty");
-Duty.value = 1 - 1 / 4;
 let DutyInput = new InputCtrl(Duty, pwm, 0.01);
+DutyInput.set(1 - 1 / 4);
+
+compare.registerObserver(DutyInput, () => pwm.getDuty());
+compare.registerObserver(CCRInput, () => pwm.getCompareValue());

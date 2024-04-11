@@ -28,13 +28,22 @@ class PWM {
     } else {
       duty = compare.val / counter.arr;
     }
+    if (duty < 0) {
+      duty = 0;
+    }
+    if (duty > 1) {
+      duty = 1;
+    }
     return duty;
+  }
+  getCompareValue() {
+    return this.compare.val;
   }
   update(duty) {
     if (this.output.mode === 0) {
-      this.compare.val = (1 - duty) * this.counter.arr;
+      this.compare.update((1 - duty) * this.counter.arr);
     } else {
-      this.compare.val = duty * this.counter.arr;
+      this.compare.update(duty * this.counter.arr);
     }
   }
 }

@@ -1,5 +1,6 @@
-class Compare {
+class Compare extends Observable {
   constructor(val) {
+    super();
     this.val = val;
     this.margin = 10;
   }
@@ -26,8 +27,10 @@ class Compare {
   }
   setValFromP(p) {
     this.val = this.PWM.origin.y - p.y;
+    this.notifyObservers();
   }
   update(v) {
     this.val = v;
+    this.notifyObservers();
   }
 }
