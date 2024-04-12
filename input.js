@@ -27,7 +27,7 @@ class InputCtrl {
       this.input.value = parseFloat(
         parseFloat(this.input.value) + dy * this.inc
       ).toFixed(this.digit);
-      this.obj.update(this.input.value);
+      this.obj.update(parseFloat(this.input.value));
       this.input.lastPos = new Point(e.detail.x, e.detail.y);
     });
 
