@@ -46,4 +46,16 @@ class PWM {
       this.compare.update(duty * this.counter.arr);
     }
   }
+  mouseDown(p) {
+    this.compare.mouseDown(p);
+    this.output.mouseDown(p);
+  }
+  mouseMove(p) {
+    this.compare.mouseMove(p);
+    this.output.mouseMove(p);
+  }
+  mouseUp(p) {
+    this.compare.mouseUp(p);
+    this.output.mouseUp(p);
+  }
 }

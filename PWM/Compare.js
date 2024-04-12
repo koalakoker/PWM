@@ -3,6 +3,7 @@ class Compare extends Observable {
     super();
     this.val = val;
     this.margin = 10;
+    this.click = false;
   }
   draw(ctx) {
     let xStart = this.PWM.getStartX();
@@ -32,5 +33,23 @@ class Compare extends Observable {
   update(v) {
     this.val = v;
     this.notifyObservers();
+  }
+  mouseDown(p) {
+    if (this.over(p)) {
+      canvas.style.cursor = "move";
+      this.click = true;
+    }
+  }
+  mouseMove(p) {
+    if (!this.click) {
+      if (this.over(p)) {
+        canvas.style.cursor = "pointer";
+      }
+    } else {
+      this.setValFromP(p);
+    }
+  }
+  mouseUp(p) {
+    this.click = false;
   }
 }

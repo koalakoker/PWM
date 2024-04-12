@@ -17,8 +17,6 @@ let counter = new Counter(186, Counter.countingUp);
 let compare = new Compare(186 / 4);
 let pwm = new PWM(new Point(20, 206), counter, compare);
 
-let click = false;
-
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   pwm.draw(ctx);
@@ -44,27 +42,18 @@ function keypressed(e) {
 
 function mouseDown(e) {
   let p = getPosOnCanvas(new Point(e.x, e.y));
-  if (compare.over(p)) {
-    canvas.style.cursor = "move";
-    click = true;
-  }
+  pwm.mouseDown(p);
 }
 
 function mouseMove(e) {
   let p = getPosOnCanvas(new Point(e.x, e.y));
-  if (!click) {
-    if (compare.over(p)) {
-      canvas.style.cursor = "pointer";
-    } else {
-      canvas.style.cursor = "default";
-    }
-  } else {
-    compare.setValFromP(p);
-  }
+  canvas.style.cursor = "default";
+  pwm.mouseMove(p);
 }
 
 function mouseUp(e) {
-  click = false;
+  let p = getPosOnCanvas(new Point(e.x, e.y));
+  pwm.mouseUp(p);
   canvas.style.cursor = "default";
 }
 
