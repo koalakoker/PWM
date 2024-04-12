@@ -31,3 +31,5 @@ DutyInput.set(1 - 1 / 4);
 
 compare.registerObserver(DutyInput, () => pwm.getDuty());
 compare.registerObserver(CCRInput, () => pwm.getCompareValue());
+counter.registerObserver(ARRInput, () => pwm.counter.getARR());
+counter.registerObserver(DutyInput, () => pwm.getDuty());

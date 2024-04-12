@@ -1,8 +1,9 @@
-class Counter {
+class Counter extends Observable {
   static countingUp = 0;
   static countingUpDown = 1;
   static countingDown = 2;
   constructor(arr, mode) {
+    super();
     this.arr = arr;
     this.mode = mode;
     this.periods = 3;
@@ -19,6 +20,9 @@ class Counter {
       this.step();
     }
     endPoly(ctx);
+  }
+  getARR() {
+    return this.arr;
   }
   getCounter() {
     return this.counter;
@@ -65,6 +69,7 @@ class Counter {
   }
   update(v) {
     this.arr = v;
+    this.notifyObservers();
   }
   getCounterValueAtX(x) {
     return this.counterValues[x];
