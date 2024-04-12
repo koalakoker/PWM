@@ -60,7 +60,7 @@ class Output {
       for (let i = 0; i < this.fallingPoints.length; i++) {
         let x = this.fallingPoints[i];
         if (p.x > x - 10 && p.x < x + 10) {
-          this.lastFallingX = x;
+          this.lastEdgeX = x;
           return true;
         }
       }
@@ -72,6 +72,7 @@ class Output {
       for (let i = 0; i < this.risingPoints.length; i++) {
         let x = this.risingPoints[i];
         if (p.x > x - 10 && p.x < x + 10) {
+          this.lastEdgeX = x;
           return true;
         }
       }
@@ -113,17 +114,28 @@ class Output {
   }
 
   moveRisingFromP(p) {
-    // Change duty
+    if (this.mode === 0) {
+      this.changeDuty(p);
+    } else if (this.mode === 1) {
+      this.changeARR(p);
+    }
+  }
+  moveFallingFromP(p) {
+    if (this.mode === 0) {
+      this.changeARR(p);
+    } else if (this.mode === 1) {
+      this.changeDuty(p);
+    }
+  }
+  changeDuty(p) {
     let x = p.x - this.PWM.origin.x;
     let v = this.PWM.counter.getCounterValueAtX(parseInt(x));
     this.PWM.compare.update(v);
   }
-  moveFallingFromP(p) {
-    // Change ARR
-    let v = parseInt(p.x - this.lastFallingX);
+  changeARR(p) {
+    let v = parseInt(p.x - this.lastEdgeX);
     let newArr = this.PWM.counter.arr + v;
     this.PWM.counter.update(newArr);
-    this.lastFallingX = this.lastFallingX + v;
-    //this.notifyObservers();
+    this.lastEdgeX = this.lastEdgeX + v;
   }
 }
