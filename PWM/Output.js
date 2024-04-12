@@ -60,6 +60,7 @@ class Output {
       for (let i = 0; i < this.fallingPoints.length; i++) {
         let x = this.fallingPoints[i];
         if (p.x > x - 10 && p.x < x + 10) {
+          this.lastFallingX = x;
           return true;
         }
       }
@@ -118,7 +119,11 @@ class Output {
     this.PWM.compare.update(v);
   }
   moveFallingFromP(p) {
-    this.val = this.PWM.origin.y - p.y;
-    this.notifyObservers();
+    // Change ARR
+    let v = parseInt(p.x - this.lastFallingX);
+    let newArr = this.PWM.counter.arr + v;
+    this.PWM.counter.update(newArr);
+    this.lastFallingX = this.lastFallingX + v;
+    //this.notifyObservers();
   }
 }
