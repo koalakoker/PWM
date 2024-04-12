@@ -38,13 +38,11 @@ class Output {
     }
     endPoly(ctx);
   }
-
   edgeDetectorInit() {
     this.risingPoints = [];
     this.fallingPoints = [];
     this.oldState = undefined;
   }
-
   evaluateEdges(state) {
     if (this.oldState === undefined) {
       this.oldState = state;
@@ -57,7 +55,6 @@ class Output {
     }
     this.oldState = state;
   }
-
   overFalling(p) {
     if (this.inverticalRange(p)) {
       for (let i = 0; i < this.fallingPoints.length; i++) {
@@ -80,7 +77,6 @@ class Output {
     }
     return false;
   }
-
   inverticalRange(p) {
     let yMax = this.PWM.origin.y + this.margin + this.onLevel;
     let yMin = yMax - this.onLevel;
@@ -89,21 +85,40 @@ class Output {
 
   mouseDown(p) {
     if (this.overFalling(p)) {
+      canvas.style.cursor = "move";
+      this.moveFalling = true;
     }
     if (this.overRising(p)) {
+      canvas.style.cursor = "move";
+      this.moveRising = true;
     }
   }
-
   mouseMove(p) {
-    if (!this.click) {
-      let v = this.overFalling(p);
-      if (v === true) {
+    if (this.moveFalling) {
+      this.moveFallingFromP(p);
+    } else if (this.moveRising) {
+      this.moveRisingFromP(p);
+    } else {
+      if (this.overFalling(p)) {
         canvas.style.cursor = "pointer";
       } else if (this.overRising(p) === true) {
         canvas.style.cursor = "pointer";
       }
     }
   }
+  mouseUp(p) {
+    this.moveFalling = false;
+    this.moveRising = false;
+  }
 
-  mouseUp(p) {}
+  moveRisingFromP(p) {
+    // Change duty
+    let x = p.x - this.PWM.origin.x;
+    let v = this.PWM.counter.getCounterValueAtX(parseInt(x));
+    this.PWM.compare.update(v);
+  }
+  moveFallingFromP(p) {
+    this.val = this.PWM.origin.y - p.y;
+    this.notifyObservers();
+  }
 }

@@ -66,4 +66,7 @@ class Counter {
   update(v) {
     this.arr = v;
   }
+  getCounterValueAtX(x) {
+    return this.counterValues[x];
+  }
 }
