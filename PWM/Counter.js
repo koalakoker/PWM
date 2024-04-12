@@ -1,7 +1,7 @@
 class Counter extends Observable {
   static countingUp = 0;
-  static countingUpDown = 1;
-  static countingDown = 2;
+  static countingDown = 1;
+  static countingUpDown = 2;
   constructor(arr, mode) {
     super();
     this.arr = arr;

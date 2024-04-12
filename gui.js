@@ -3,19 +3,17 @@ document.addEventListener("mousedown", mouseDown);
 document.addEventListener("mousemove", mouseMove);
 document.addEventListener("mouseup", mouseUp);
 
-let PWM1Button = document.querySelector('input[name="option"][value="PWM1"]');
-let PWM2Button = document.querySelector('input[name="option"][value="PWM2"]');
+let Counting = document.getElementById("Counting");
 
-function handleRadioButtonChange() {
-  if (PWM1Button.checked) {
-    pwm.output.mode = 0;
-  } else if (PWM2Button.checked) {
-    pwm.output.mode = 1;
-  }
-}
+Counting.addEventListener("change", () => {
+  pwm.counter.mode = Counting.selectedIndex;
+});
 
-PWM1Button.addEventListener("change", handleRadioButtonChange);
-PWM2Button.addEventListener("change", handleRadioButtonChange);
+let PWM_Mode = document.getElementById("PWM_Mode");
+
+PWM_Mode.addEventListener("change", () => {
+  pwm.output.mode = PWM_Mode.selectedIndex;
+});
 
 let ARR = document.getElementById("ARR");
 let ARRInput = new InputCtrl(ARR, counter, 1, 0);

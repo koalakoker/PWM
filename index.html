@@ -8,14 +8,19 @@
 
     <div class="container">
       <div class="row">
-        <div class="radio-container">
-          <label class="radio-label" for="PWM1">PWM1</label>
-          <input type="radio" name="option" id="PWM1" value="PWM1" checked />
-        </div>
-        <div class="radio-container">
-          <label class="radio-label" for="PWM2">PWM2</label>
-          <input type="radio" name="option" id="PWM2" value="PWM2" />
-        </div>
+        <label class="label" for="Counting">Counting:</label>
+        <select id="Counting">
+          <option value="PWM0">Up</option>
+          <option value="PWM1">Down</option>
+          <option value="PWM2">Up-down</option>
+        </select>
+      </div>
+      <div class="row">
+        <label class="label" for="PWM_Mode">PWM mode</label>
+        <select id="PWM_Mode">
+          <option value="Mode1">Mode1</option>
+          <option value="Mode2">Mode2</option>
+        </select>
       </div>
       <div class="row">
         <label class="label" for="ARR">ARR:</label>
