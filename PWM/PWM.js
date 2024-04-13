@@ -1,12 +1,16 @@
 class PWM {
   constructor(origin, counter, compare) {
     this.origin = origin;
-    this.counter = counter;
+  }
+  createCounter(arr, mode) {
+    this.counter = new Counter(arr, mode);
     this.counter.PWM = this;
-    this.length = counter.arr * counter.periods + 1;
-    this.compare = compare;
+    this.length = this.counter.arr * this.counter.periods + 1;
+  }
+  addCompare(val, mode) {
+    this.compare = new Compare(val);
     this.compare.PWM = this;
-    this.output = new Output(0);
+    this.output = new Output(mode);
     this.output.PWM = this;
     this.duty = this.getDuty();
   }
@@ -24,9 +28,9 @@ class PWM {
   getDuty() {
     let duty;
     if (this.output.mode === 0) {
-      duty = 1 - compare.val / counter.arr;
+      duty = 1 - this.compare.val / this.counter.arr;
     } else {
-      duty = compare.val / counter.arr;
+      duty = this.compare.val / this.counter.arr;
     }
     if (duty < 0) {
       duty = 0;

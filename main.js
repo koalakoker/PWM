@@ -13,9 +13,9 @@ let intervalID = setInterval(draw, 1000 / fps);
 let running = true;
 let isOn = false;
 
-let counter = new Counter(186, Counter.countingUp);
-let compare = new Compare(186 / 4);
-let pwm = new PWM(new Point(20, 206), counter, compare);
+let pwm = new PWM(new Point(20, 206));
+pwm.createCounter(186, Counter.countingUp);
+pwm.addCompare(186 / 4, 0);
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
