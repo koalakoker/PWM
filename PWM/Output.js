@@ -7,7 +7,7 @@ class Output {
   }
   draw(ctx) {
     let startX = this.PWM.getStartX();
-    let bottomLevel = this.PWM.origin.y + this.margin + this.onLevel;
+    let bottomLevel = this.getBottomLevel();
 
     let yUp = bottomLevel - this.onLevel;
     let yDown = bottomLevel;
@@ -30,7 +30,7 @@ class Output {
         startP = pUp;
       }
     }
-    startPoly(ctx, startP, "red", 3);
+    startPoly(ctx, startP, this.compare.color, 3);
 
     this.edgeDetectorInit();
 
@@ -97,8 +97,11 @@ class Output {
     }
     return false;
   }
+  getBottomLevel() {
+    return this.PWM.origin.y + (this.margin + this.onLevel) * (this.index + 1);
+  }
   inverticalRange(p) {
-    let yMax = this.PWM.origin.y + this.margin + this.onLevel;
+    let yMax = this.getBottomLevel();
     let yMin = yMax - this.onLevel;
     return p.y > yMin && p.y < yMax;
   }
@@ -107,11 +110,14 @@ class Output {
     if (this.overFalling(p)) {
       canvas.style.cursor = "move";
       this.moveFalling = true;
+      return true; // Stop propagating
     }
     if (this.overRising(p)) {
       canvas.style.cursor = "move";
       this.moveRising = true;
+      return true; // Stop propagating
     }
+    return false;
   }
   mouseMove(p) {
     if (this.moveFalling) {

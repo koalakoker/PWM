@@ -8,19 +8,23 @@ class PWM {
     this.length = this.counter.arr * this.counter.periods + 1;
     this.compares = [];
   }
-  addCompare(val, mode) {
-    let compare = new Compare(val);
+  addCompare(val, mode, color) {
+    let compare = new Compare(val, color);
     compare.PWM = this;
 
     let output = new Output(mode);
     output.PWM = this;
     output.compare = compare;
+    output.index = this.compares.length;
 
     this.compares.push({ compare: compare, output: output });
   }
   draw(ctx) {
     this.counter.draw(ctx); // Value of counter is stored in this.counter.counterValues
-    this.compares.forEach((element) => {
+
+    // Draw in reverse order because the first is the most foreground element
+    const reversedArray = [...this.compares].reverse();
+    reversedArray.forEach((element) => {
       element.compare.draw(ctx);
       element.output.draw(ctx);
     });
@@ -62,8 +66,8 @@ class PWM {
   }
   mouseDown(p) {
     for (let i = 0; i < this.compares.length; i++) {
-      this.compares[i].compare.mouseDown(p);
-      this.compares[i].output.mouseDown(p);
+      if (this.compares[i].compare.mouseDown(p)) break;
+      if (this.compares[i].output.mouseDown(p)) break;
     }
   }
   mouseMove(p) {

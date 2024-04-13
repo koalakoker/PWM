@@ -1,7 +1,8 @@
 class Compare extends Observable {
-  constructor(val) {
+  constructor(val, color) {
     super();
     this.val = val;
+    this.color = color;
     this.margin = 10;
     this.click = false;
   }
@@ -9,7 +10,7 @@ class Compare extends Observable {
     let xStart = this.PWM.getStartX();
     let xStop = this.PWM.getEndX();
     let y = this.getY();
-    drawLine(ctx, new Point(xStart, y), new Point(xStop, y), "red", 2, [5, 5]);
+    drawLine(ctx, new Point(xStart, y), new Point(xStop, y), this.color, 2, [5, 5]);
   }
   getY() {
     return this.PWM.origin.y - this.val;
@@ -38,7 +39,9 @@ class Compare extends Observable {
     if (this.over(p)) {
       canvas.style.cursor = "move";
       this.click = true;
+      return true; // Stop propagating
     }
+    return false;
   }
   mouseMove(p) {
     if (!this.click) {

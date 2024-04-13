@@ -15,7 +15,9 @@ let isOn = false;
 
 let pwm = new PWM(new Point(20, 206));
 pwm.createCounter(186, Counter.countingUp);
-pwm.addCompare(186 / 4, 0);
+pwm.addCompare(186 / 2, 0, "red");
+pwm.addCompare(186 / 2, 0, "green");
+pwm.addCompare(186 / 2, 0, "blue");
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
