@@ -20,14 +20,16 @@ let ARRInput = new InputCtrl(ARR, pwm.counter, 1, 0);
 ARRInput.set(186);
 
 let CCR = document.getElementById("Compare");
-let CCRInput = new InputCtrl(CCR, pwm.compare, 1, 0);
+let CCRInput = new InputCtrl(CCR, pwm.compares[0].compare, 1, 0);
 CCRInput.set(186 / 4);
 
 let Duty = document.getElementById("Duty");
-let DutyInput = new InputCtrl(Duty, pwm, 0.01);
+let DutyInput = new InputCtrl(Duty, pwm, 0.01, 2, 0);
 DutyInput.set(1 - 1 / 4);
 
-pwm.compare.registerObserver(DutyInput, () => pwm.getDuty());
-pwm.compare.registerObserver(CCRInput, () => pwm.getCompareValue());
+pwm.compares[0].compare.registerObserver(DutyInput, () => pwm.getDuty(0));
+pwm.compares[0].compare.registerObserver(CCRInput, () =>
+  pwm.getCompareValue(0)
+);
 pwm.counter.registerObserver(ARRInput, () => pwm.counter.getARR());
-pwm.counter.registerObserver(DutyInput, () => pwm.getDuty());
+pwm.counter.registerObserver(DutyInput, () => pwm.getDuty(0));

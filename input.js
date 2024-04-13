@@ -1,9 +1,10 @@
 class InputCtrl {
-  constructor(input, obj, inc = 1, digit = 2) {
+  constructor(input, obj, inc = 1, digit = 2, index = undefined) {
     this.input = input;
     this.obj = obj;
     this.inc = inc;
     this.digit = digit;
+    this.index = index;
     this.regiserListeners();
     this.mouseMoveF = null;
   }
@@ -27,7 +28,7 @@ class InputCtrl {
       this.input.value = parseFloat(
         parseFloat(this.input.value) + dy * this.inc
       ).toFixed(this.digit);
-      this.obj.update(parseFloat(this.input.value));
+      this.obj.update(parseFloat(this.input.value), this.index);
       this.input.lastPos = new Point(e.detail.x, e.detail.y);
     });
 

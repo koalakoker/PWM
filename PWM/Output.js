@@ -17,7 +17,7 @@ class Output {
 
     let startP;
 
-    if (this.PWM.counter.counterValues[0] >= this.PWM.compare.val) {
+    if (this.PWM.counter.counterValues[0] >= this.compare.val) {
       if (this.mode === 0) {
         startP = pUp;
       } else {
@@ -38,7 +38,7 @@ class Output {
       let pOn = new Point(startX + x, bottomLevel - this.onLevel);
       let pOff = new Point(startX + x, bottomLevel);
       let state;
-      if (this.PWM.counter.counterValues[x] >= this.PWM.compare.val) {
+      if (this.PWM.counter.counterValues[x] >= this.compare.val) {
         if (this.mode === 0) {
           state = pOn;
         } else {
@@ -148,7 +148,7 @@ class Output {
   changeDuty(p) {
     let x = p.x - this.PWM.origin.x;
     let v = this.PWM.counter.getCounterValueAtX(parseInt(x));
-    this.PWM.compare.update(v);
+    this.compare.update(v);
   }
   changeARR(p) {
     let v = parseInt(p.x - this.lastEdgeX);

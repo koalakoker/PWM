@@ -6,18 +6,24 @@ class PWM {
     this.counter = new Counter(arr, mode);
     this.counter.PWM = this;
     this.length = this.counter.arr * this.counter.periods + 1;
+    this.compares = [];
   }
   addCompare(val, mode) {
-    this.compare = new Compare(val);
-    this.compare.PWM = this;
-    this.output = new Output(mode);
-    this.output.PWM = this;
-    this.duty = this.getDuty();
+    let compare = new Compare(val);
+    compare.PWM = this;
+
+    let output = new Output(mode);
+    output.PWM = this;
+    output.compare = compare;
+
+    this.compares.push({ compare: compare, output: output });
   }
   draw(ctx) {
     this.counter.draw(ctx); // Value of counter is stored in this.counter.counterValues
-    this.compare.draw(ctx);
-    this.output.draw(ctx);
+    this.compares.forEach((element) => {
+      element.compare.draw(ctx);
+      element.output.draw(ctx);
+    });
   }
   getStartX() {
     return this.origin.x;
@@ -25,12 +31,14 @@ class PWM {
   getEndX() {
     return this.origin.x + this.length;
   }
-  getDuty() {
+  getDuty(index) {
+    let compare = this.compares[index].compare;
+    let output = this.compares[index].output;
     let duty;
-    if (this.output.mode === 0) {
-      duty = 1 - this.compare.val / this.counter.arr;
+    if (output.mode === 0) {
+      duty = 1 - compare.val / this.counter.arr;
     } else {
-      duty = this.compare.val / this.counter.arr;
+      duty = compare.val / this.counter.arr;
     }
     if (duty < 0) {
       duty = 0;
@@ -40,26 +48,34 @@ class PWM {
     }
     return duty;
   }
-  getCompareValue() {
-    return this.compare.val;
+  getCompareValue(index) {
+    return this.compares[index].compare.val;
   }
-  update(duty) {
-    if (this.output.mode === 0) {
-      this.compare.update((1 - duty) * this.counter.arr);
+  update(duty, index) {
+    let compare = this.compares[index].compare;
+    let output = this.compares[index].output;
+    if (output.mode === 0) {
+      compare.update((1 - duty) * this.counter.arr);
     } else {
-      this.compare.update(duty * this.counter.arr);
+      compare.update(duty * this.counter.arr);
     }
   }
   mouseDown(p) {
-    this.compare.mouseDown(p);
-    this.output.mouseDown(p);
+    for (let i = 0; i < this.compares.length; i++) {
+      this.compares[i].compare.mouseDown(p);
+      this.compares[i].output.mouseDown(p);
+    }
   }
   mouseMove(p) {
-    this.compare.mouseMove(p);
-    this.output.mouseMove(p);
+    for (let i = 0; i < this.compares.length; i++) {
+      this.compares[i].compare.mouseMove(p);
+      this.compares[i].output.mouseMove(p);
+    }
   }
   mouseUp(p) {
-    this.compare.mouseUp(p);
-    this.output.mouseUp(p);
+    for (let i = 0; i < this.compares.length; i++) {
+      this.compares[i].compare.mouseUp(p);
+      this.compares[i].output.mouseUp(p);
+    }
   }
 }
