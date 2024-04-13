@@ -8,11 +8,29 @@ class Output {
   draw(ctx) {
     let startX = this.PWM.getStartX();
     let bottomLevel = this.PWM.origin.y + this.margin + this.onLevel;
+
+    let yUp = bottomLevel - this.onLevel;
+    let yDown = bottomLevel;
+
+    let pUp = new Point(startX, yUp);
+    let pDown = new Point(startX, yDown);
+
+    let startP;
+
     if (this.PWM.counter.counterValues[0] >= this.PWM.compare.val) {
-      startPoly(ctx, new Point(startX, bottomLevel - this.onLevel), "red", 3);
+      if (this.mode === 0) {
+        startP = pUp;
+      } else {
+        startP = pDown;
+      }
     } else {
-      startPoly(ctx, new Point(startX, bottomLevel), "red", 3);
+      if (this.mode === 0) {
+        startP = pDown;
+      } else {
+        startP = pUp;
+      }
     }
+    startPoly(ctx, startP, "red", 3);
 
     this.edgeDetectorInit();
 
