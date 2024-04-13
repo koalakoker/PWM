@@ -12,7 +12,7 @@ Counting.addEventListener("change", () => {
 let PWM_Mode = document.getElementById("PWM_Mode");
 
 PWM_Mode.addEventListener("change", () => {
-  pwm.output.mode = PWM_Mode.selectedIndex;
+  pwm.compares[0].output.mode = PWM_Mode.selectedIndex;
 });
 
 let ARR = document.getElementById("ARR");
