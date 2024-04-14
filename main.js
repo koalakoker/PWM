@@ -19,6 +19,20 @@ pwm.addCompare(186 / 2, 0, "red");
 pwm.addCompare(186 / 2, 0, "green");
 pwm.addCompare(186 / 2, 0, "blue");
 
+let com = new Comm(500, () => {
+  let arrayBuffer = new ArrayBuffer(12);
+  let dataView = new DataView(arrayBuffer);
+  dataView.setUint16(0, pwm.counter.getARR(), true);
+  dataView.setUint8(2, pwm.counter.getCountingMode());
+  dataView.setUint16(3, pwm.getCompareValue(0), true);
+  dataView.setUint8(5, pwm.compares[0].output.mode);
+  dataView.setUint16(6, pwm.getCompareValue(1), true);
+  dataView.setUint8(8, pwm.compares[1].output.mode);
+  dataView.setUint16(9, pwm.getCompareValue(2), true);
+  dataView.setUint8(11, pwm.compares[2].output.mode);
+  return arrayBuffer;
+});
+
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   pwm.draw(ctx);

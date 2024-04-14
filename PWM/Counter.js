@@ -24,6 +24,9 @@ class Counter extends Observable {
   getARR() {
     return this.arr;
   }
+  getCountingMode() {
+    return this.mode;
+  }
   getCounter() {
     return this.counter;
   }
