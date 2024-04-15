@@ -1,5 +1,5 @@
 class PWM {
-  constructor(origin, counter, compare) {
+  constructor(origin) {
     this.origin = origin;
   }
   createCounter(arr, mode) {
@@ -40,9 +40,9 @@ class PWM {
     let output = this.compares[index].output;
     let duty;
     if (output.mode === 0) {
-      duty = 1 - compare.val / this.counter.arr;
-    } else {
       duty = compare.val / this.counter.arr;
+    } else {
+      duty = 1 - compare.val / this.counter.arr;
     }
     if (duty < 0) {
       duty = 0;
@@ -59,9 +59,9 @@ class PWM {
     let compare = this.compares[index].compare;
     let output = this.compares[index].output;
     if (output.mode === 0) {
-      compare.update((1 - duty) * this.counter.arr);
-    } else {
       compare.update(duty * this.counter.arr);
+    } else {
+      compare.update((1 - duty) * this.counter.arr);
     }
   }
   mouseDown(p) {

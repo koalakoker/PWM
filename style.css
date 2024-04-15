@@ -27,6 +27,18 @@ html {
   margin-bottom: 10px;
 }
 
+.ch1 {
+  background-color: red;
+}
+
+.ch2 {
+  background-color: green;
+}
+
+.ch3 {
+  background-color: blue;
+}
+
 .radio-label {
   color: white;
   margin-right: 5px;

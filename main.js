@@ -13,11 +13,11 @@ let intervalID = setInterval(draw, 1000 / fps);
 let running = true;
 let isOn = false;
 
-let pwm = new PWM(new Point(20, 206));
-pwm.createCounter(186, Counter.countingUp);
-pwm.addCompare(186 / 2, 0, "red");
-pwm.addCompare(186 / 2, 0, "green");
-pwm.addCompare(186 / 2, 0, "blue");
+let pwm = new PWM(new Point(20, 250));
+pwm.createCounter(initARR, Counter.countingUp);
+pwm.addCompare(initCCR, 0, "red");
+pwm.addCompare(initCCR, 0, "green");
+pwm.addCompare(initCCR, 0, "blue");
 
 let com = new Comm(100, () => {
   let arrayBuffer = new ArrayBuffer(12);
