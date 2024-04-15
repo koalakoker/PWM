@@ -80,3 +80,30 @@ function getPosOnCanvas(p) {
   let cY = rect.top;
   return new Point(p.x - cX, p.y - cY);
 }
+
+let sinModTimer;
+let t = 0;
+let ts = 0.01;
+let freq = 1;
+let omega = 2 * Math.PI * freq;
+let sinModBTN = document.getElementById("sinModulationBTN");
+
+function sinModulation() {
+  if (sinModTimer === undefined) {
+    sinModBTN.textContent = "Stop Modulation";
+    sinModTimer = setInterval(() => {
+      t += ts;
+      da = 0.5 * (1 + Math.sin(omega * t));
+      db = 0.5 * (1 + Math.sin(omega * t + (Math.PI * 2) / 3));
+      dc = 0.5 * (1 + Math.sin(omega * t - (Math.PI * 2) / 3));
+
+      pwm.update(da, 0);
+      pwm.update(db, 1);
+      pwm.update(dc, 2);
+    }, ts * 1000);
+  } else {
+    clearTimeout(sinModTimer);
+    sinModTimer = undefined;
+    sinModBTN.textContent = "Start Modulation";
+  }
+}
