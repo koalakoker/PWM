@@ -18,6 +18,16 @@ PWM_Mode1.addEventListener("change", () => {
   pwm.compares[0].output.mode = PWM_Mode1.selectedIndex;
 });
 
+let PWM_Mode2 = document.getElementById("PWM_Mode2");
+PWM_Mode2.addEventListener("change", () => {
+  pwm.compares[1].output.mode = PWM_Mode2.selectedIndex;
+});
+
+let PWM_Mode3 = document.getElementById("PWM_Mode3");
+PWM_Mode3.addEventListener("change", () => {
+  pwm.compares[2].output.mode = PWM_Mode3.selectedIndex;
+});
+
 let CCR1 = document.getElementById("Compare1");
 let CCRInput1 = new InputCtrl(CCR1, pwm.compares[0].compare, 1, 0);
 CCRInput1.set(initCCR);
