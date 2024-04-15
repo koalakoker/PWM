@@ -19,7 +19,7 @@ pwm.addCompare(186 / 2, 0, "red");
 pwm.addCompare(186 / 2, 0, "green");
 pwm.addCompare(186 / 2, 0, "blue");
 
-let com = new Comm(500, () => {
+let com = new Comm(100, () => {
   let arrayBuffer = new ArrayBuffer(12);
   let dataView = new DataView(arrayBuffer);
   dataView.setUint16(0, pwm.counter.getARR(), true);

@@ -19,15 +19,15 @@ class Output {
 
     if (this.PWM.counter.counterValues[0] >= this.compare.val) {
       if (this.mode === 0) {
-        startP = pUp;
-      } else {
         startP = pDown;
+      } else {
+        startP = pUp;
       }
     } else {
       if (this.mode === 0) {
-        startP = pDown;
-      } else {
         startP = pUp;
+      } else {
+        startP = pDown;
       }
     }
     startPoly(ctx, startP, this.compare.color, 3);
@@ -40,15 +40,15 @@ class Output {
       let state;
       if (this.PWM.counter.counterValues[x] >= this.compare.val) {
         if (this.mode === 0) {
-          state = pOn;
-        } else {
           state = pOff;
+        } else {
+          state = pOn;
         }
       } else {
         if (this.mode === 0) {
-          state = pOff;
-        } else {
           state = pOn;
+        } else {
+          state = pOff;
         }
       }
       this.evaluateEdges(state);
@@ -139,16 +139,16 @@ class Output {
 
   moveRisingFromP(p) {
     if (this.mode === 0) {
-      this.changeDuty(p);
-    } else if (this.mode === 1) {
       this.changeARR(p);
+    } else if (this.mode === 1) {
+      this.changeDuty(p);
     }
   }
   moveFallingFromP(p) {
     if (this.mode === 0) {
-      this.changeARR(p);
-    } else if (this.mode === 1) {
       this.changeDuty(p);
+    } else if (this.mode === 1) {
+      this.changeARR(p);
     }
   }
   changeDuty(p) {
