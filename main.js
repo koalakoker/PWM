@@ -13,7 +13,8 @@ let intervalID = setInterval(draw, 1000 / fps);
 let running = true;
 let isOn = false;
 
-let pwm = new PWM(new Point(20, 250));
+let pwmMargin = 20;
+let pwm = new PWM(new Point(pwmMargin, 250), canvas.width - pwmMargin * 2);
 pwm.createCounter(initARR, Counter.countingUp);
 pwm.addCompare(initCCR, 0, "red");
 pwm.addCompare(initCCR, 0, "green");

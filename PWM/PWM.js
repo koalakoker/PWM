@@ -1,11 +1,11 @@
 class PWM {
-  constructor(origin) {
+  constructor(origin, length) {
     this.origin = origin;
+    this.length = length;
   }
   createCounter(arr, mode) {
     this.counter = new Counter(arr, mode);
     this.counter.PWM = this;
-    this.length = this.counter.arr * this.counter.periods + 1;
     this.compares = [];
   }
   addCompare(val, mode, color) {
