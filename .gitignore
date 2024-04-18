@@ -2,6 +2,7 @@ node_modules
 package-lock.json
 dist
 electron.js-darwin-x64
+electronApp.js-darwin-x64
 .DS_Store
 dist
 exe
